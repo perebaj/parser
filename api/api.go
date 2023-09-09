@@ -1,3 +1,4 @@
+// Package api package provides a set of functions to handle http requests and responses
 package api
 
 import (
@@ -9,6 +10,7 @@ import (
 	"net/http"
 )
 
+// Error is the error response
 type Error struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
@@ -33,7 +35,7 @@ func sendErr(ctx context.Context, w http.ResponseWriter, statusCode int, err err
 	sendJSON(ctx, w, statusCode, httpErr)
 }
 
-func sendJSON(ctx context.Context, w http.ResponseWriter, statusCode int, body interface{}) {
+func sendJSON(_ context.Context, w http.ResponseWriter, statusCode int, body interface{}) {
 	const jsonContentType = "application/json; charset=utf-8"
 
 	w.Header().Set("Content-Type", jsonContentType)

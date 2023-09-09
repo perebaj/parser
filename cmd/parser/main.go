@@ -1,3 +1,4 @@
+// Package main wraps all the logic to start the server
 package main
 
 import (
@@ -13,7 +14,7 @@ import (
 )
 
 func main() {
-	cfg := gpt.GPTConfig{
+	cfg := gpt.Config{
 		OpenAPIKey: os.Getenv("OPENAI_API_KEY"),
 	}
 
@@ -28,7 +29,7 @@ func main() {
 
 	r := chi.NewRouter()
 	r.Group(func(r chi.Router) {
-		api.RegiserParserHandler(r, client)
+		api.RegisterHeaderParserHandler(r, client)
 	})
 
 	apiServer := &http.Server{

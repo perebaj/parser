@@ -1,3 +1,4 @@
+// Package gpt package is a wrapper for the OpenAI GPT-3 API
 package gpt
 
 import (
@@ -64,6 +65,7 @@ const userPrompt = `
 		{{.Text}}
 	END TEXT`
 
+// Header is the header of a purchase order
 type Header struct {
 	PurchaseOrderNumber string `json:"purchase_order_number"`
 	PurchaseOrderDate   string `json:"purchase_order_date"`
@@ -96,26 +98,26 @@ func createUserPrompt(text string) (string, error) {
 	return out.String(), nil
 }
 
-// GPTConfig is the set of configuration parameters for the GPTClient
-type GPTConfig struct {
+// Config is the set of configuration parameters for the GPTClient
+type Config struct {
 	OpenAPIKey string
 }
 
-// GPTClient is the client for the GPT API
-type GPTClient struct {
+// Client is the client for the GPT API
+type Client struct {
 	client *openai.Client
 }
 
 // NewHeaderParser creates a new GPTClient
-func NewHeaderParser(cfg GPTConfig) *GPTClient {
+func NewHeaderParser(cfg Config) *Client {
 	c := openai.NewClient(cfg.OpenAPIKey)
-	return &GPTClient{
+	return &Client{
 		client: c,
 	}
 }
 
 // HeaderParser parses the header of a purchase order
-func (c *GPTClient) HeaderParser(text string) (*Header, error) {
+func (c *Client) HeaderParser(text string) (*Header, error) {
 	userPrompt, err := createUserPrompt(text)
 	if err != nil {
 		return nil, fmt.Errorf("create user prompt error %v", err)

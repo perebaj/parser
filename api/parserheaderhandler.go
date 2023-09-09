@@ -8,7 +8,8 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func RegiserParserHandler(r chi.Router, client *gpt.GPTClient) {
+// RegisterHeaderParserHandler registers the parser handler
+func RegisterHeaderParserHandler(r chi.Router, client *gpt.Client) {
 	const parserHeaderPath = "/parsers/header/veneza"
 
 	r.Post(parserHeaderPath, func(w http.ResponseWriter, r *http.Request) {
@@ -17,15 +18,16 @@ func RegiserParserHandler(r chi.Router, client *gpt.GPTClient) {
 
 	// TODO: remove this endpoint
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello world"))
+		sendJSON(r.Context(), w, http.StatusOK, "ok")
 	})
 }
 
+// ParserReqBody is the request body for the parser endpoint
 type ParserReqBody struct {
 	Text string `json:"text"`
 }
 
-func parser(w http.ResponseWriter, r *http.Request, client *gpt.GPTClient) {
+func parser(w http.ResponseWriter, r *http.Request, client *gpt.Client) {
 	ctx := r.Context()
 	var ExtractorReqBody ParserReqBody
 	err := json.NewDecoder(r.Body).Decode(&ExtractorReqBody)
