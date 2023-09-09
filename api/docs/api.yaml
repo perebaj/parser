@@ -1,0 +1,33 @@
+openapi: '3.0.2'
+info:
+  title: Parser
+  version: '0.0.0'
+servers:
+  - url: http://localhost:8080
+paths:
+  /health:
+    get:
+      responses:
+        '200':
+          description: OK
+  /parsers/header/veneza:
+    post:
+      tags:
+        - "parsers/header"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParserRequest'
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    ParserRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          example: ""
+
