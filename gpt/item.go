@@ -101,6 +101,7 @@ const itemSystemPrompt = `
 	Do not Generate any fields that are not specified in the schema.
 	Do not generate any data if you don't have enough confidence in it.
 `
+
 // Item represents a purchase order item
 type Item struct {
 	Code              string `json:"code"`
