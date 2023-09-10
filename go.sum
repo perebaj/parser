@@ -1,0 +1,4 @@
+github.com/go-chi/chi v1.5.5 h1:vOB/HbEMt9QqBqErz07QehcOKHaWFtuj87tTDVz2qXE=
+github.com/go-chi/chi v1.5.5/go.mod h1:C9JqLr3tIYjDOZpzn+BCuxY8z8vmca43EeMgyZt7irw=
+github.com/sashabaranov/go-openai v1.15.2 h1:0PW+ttxe+UNYKDkA1KTly7K6YhFBqnVBbblQ3t8AfY4=
+github.com/sashabaranov/go-openai v1.15.2/go.mod h1:lj5b/K+zjTSFxVLijLSTDZuP7adOgerWeFyZLUhAKRg=
