@@ -6,7 +6,7 @@ GOLANGCI_LINT_VERSION=v1.54.0
 
 # configuration/aliases
 version=$(shell git rev-parse --short HEAD)
-base_image=
+base_image=perebaj
 image=$(base_image):$(version)
 devimage=parser-dev
 # To avoid downloading deps everytime it runs on containers
