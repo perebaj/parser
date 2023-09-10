@@ -10,10 +10,22 @@ paths:
       responses:
         '200':
           description: OK
-  /parsers/header/veneza:
+  /parsers/header:
     post:
       tags:
-        - "parsers/header"
+        - "veneza"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParserRequest'
+      responses:
+        '200':
+          description: OK
+  /parser/item:
+    post:
+      tags:
+        - "veneza"
       requestBody:
         content:
           application/json:

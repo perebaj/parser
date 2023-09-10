@@ -25,7 +25,7 @@ func main() {
 		syscall.Exit(1)
 	}
 
-	client := gpt.NewHeaderParser(cfg)
+	client := gpt.NewParser(cfg)
 
 	r := chi.NewRouter()
 	r.Group(func(r chi.Router) {

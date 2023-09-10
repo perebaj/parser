@@ -2,20 +2,17 @@
 package gpt
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"math"
 
 	"github.com/sashabaranov/go-openai"
 )
 
-const systemPrompt = `
+const systemHeaderPrompt = `
 	You will work like a unstructured text parser, I will give you a text and you will parse it according to the specified schema
 	and fields. You will return a JSON object.
-	extractor
 	An input example:
 
 	TEXT:
@@ -60,7 +57,7 @@ const systemPrompt = `
 	Do not generate any data if you don't have enough confidence in it.
 `
 
-const userPrompt = `
+const userHeaderPrompt = `
 	TEXT
 		{{.Text}}
 	END TEXT`
@@ -73,47 +70,6 @@ type Header struct {
 	CnpjCpfSupplier     string `json:"cnpj_cpf_supplier"`
 	FreightCondition    string `json:"freight_condition"`
 	DeliveryDate        string `json:"delivery_date"`
-}
-
-func createUserPrompt(text string) (string, error) {
-	type userInput struct {
-		Text string
-	}
-
-	tmpl, err := template.New("parser").Parse(userPrompt)
-	if err != nil {
-		return "", fmt.Errorf("template parse error: %v", err)
-	}
-
-	headerParserInput := userInput{
-		Text: text,
-	}
-	out := bytes.Buffer{}
-
-	err = tmpl.Execute(&out, headerParserInput)
-	if err != nil {
-		return "", fmt.Errorf("template execute error: %v", err)
-	}
-
-	return out.String(), nil
-}
-
-// Config is the set of configuration parameters for the GPTClient
-type Config struct {
-	OpenAPIKey string
-}
-
-// Client is the client for the GPT API
-type Client struct {
-	client *openai.Client
-}
-
-// NewHeaderParser creates a new GPTClient
-func NewHeaderParser(cfg Config) *Client {
-	c := openai.NewClient(cfg.OpenAPIKey)
-	return &Client{
-		client: c,
-	}
 }
 
 // HeaderParser parses the header of a purchase order
@@ -131,7 +87,7 @@ func (c *Client) HeaderParser(text string) (*Header, error) {
 			Messages: []openai.ChatCompletionMessage{
 				{
 					Role:    openai.ChatMessageRoleSystem,
-					Content: systemPrompt,
+					Content: systemHeaderPrompt,
 				},
 				{
 					Role:    openai.ChatMessageRoleUser,
